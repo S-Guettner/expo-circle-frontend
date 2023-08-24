@@ -10,23 +10,29 @@ const Register = ({ navigation }) => {
     const [confirmationPassword, setConfirmationPassword] = useState('');
 
     const sendRegisterData = async () => {
+        console.log("function running")
+        console.log(mail)
+        console.log(password)
+        console.log(confirmationPassword);
         try {
-            const response = await fetch('https://circle-backend-2-s-guettner.vercel.app/api/v1/register', {
+            const response = await fetch('https://circle-backend-pied.vercel.app/api/v1/register', {
                 method: 'POST',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     email: mail,
                     password: password,
-                    confirmPassword: confirmationPassword
-                })
-            })
+                    confirmPassword: confirmationPassword,
+                }),
+            });
             if (response.ok) {
+                console.log(response)
                 const res = await response.json(); // Save response data to a variable
                 await AsyncStorage.setItem('userID', res._id);
                 navigation.navigate('RegisterDetails')
             } else if (response.status === 400) {
+                console.log(response ,"error");
                 setErrorMsg(response.msg);
             }
         } catch (err) {
@@ -78,9 +84,9 @@ const Register = ({ navigation }) => {
                 />
 
                 {/* <Button onPress={() => sendRegisterData()} title="Create Account" /> */}
-                <Pressable onPress={() => sendRegisterData()} style={styles.buttonRegister}>
+                <TouchableOpacity onPress={() => sendRegisterData()} style={styles.buttonRegister}>
                     <Text style={styles.textLogin}>CREATE ACCOUNT</Text>
-                </Pressable>
+                </TouchableOpacity>
                 <Text style={styles.error}>{errorMsg}</Text>
 
                 <Text style={styles.registeredText}>Already registered?</Text>
@@ -138,7 +144,7 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
         borderRadius: 100,
-        marginTop:70
+        marginTop:70,
     },
     textLogin: {
         color: '#E98090',

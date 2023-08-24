@@ -13,26 +13,16 @@ const Stack = createStackNavigator();
 const AuthNavigator = ({ isAuthenticated, setIsAuthenticated }) => {
     return (
         <Stack.Navigator>
-            <Stack.Screen
-                name="Onboarding"
-                component={Onboarding}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen
-                name="Login"
-                component={(props) => <Login {...props} navigation={props.navigation} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen
-                name="Register"
-                component={(props) => <Register {...props} navigation={props.navigation} />}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen
-                name="RegisterDetails"
-                component={(props) => <RegisterDetails {...props} navigation={props.navigation} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
-                options={{ headerTitle: false }}
-            />
+            <Stack.Screen name="Onboarding" component={Onboarding} options={{ headerShown: false }} />
+            <Stack.Screen name="Login" options={{ headerShown: false }}>
+                {(props) => <Login {...props} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
+            </Stack.Screen>
+            <Stack.Screen name="Register" options={{ headerShown: false }}>
+                {(props) => <Register {...props} />}
+            </Stack.Screen>
+            <Stack.Screen name="RegisterDetails" options={{ headerTitle: false }}>
+                {(props) => <RegisterDetails {...props} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
+            </Stack.Screen>
         </Stack.Navigator>
     );
 };
